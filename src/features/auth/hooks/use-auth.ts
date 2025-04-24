@@ -13,7 +13,7 @@ export const useAuth = () => {
                 const response = await axiosInstance.get("/auth");
                 return response.data;
             } catch (error) {
-                console.error(error);
+                //console.error(error);
                 return null;
             }
         }

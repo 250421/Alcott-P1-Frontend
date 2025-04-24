@@ -10,7 +10,9 @@ export const Sidebar = ({ children }: SidebarProps) => {
     const { isOpen } = useSidebar();
   return (
     <div className={cn(
-        "fixed top-0 left-0 h-screen bg-blue-300 transition-all duration-300 ease-in-out",
-        isOpen ? "w-64 border-r" : "w-0")}>{children}</div>
+        "fixed top-0 left-0 border-r h-screen transition-all duration-300 ease-in-out overflow-hidden",
+        isOpen ? "w-64 bg-blue-300" : "w-0 bg-transparent")}>
+          {children}
+    </div>
   )
 }

@@ -19,6 +19,7 @@ import { Route as publicPublicImport } from './routes/(public)/_public'
 import { Route as authAuthImport } from './routes/(auth)/_auth'
 import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sign-up'
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
+import { Route as authAuthProductsImport } from './routes/(auth)/_auth.products'
 import { Route as authAuthHomeImport } from './routes/(auth)/_auth.home'
 
 // Create Virtual Routes
@@ -70,6 +71,12 @@ const publicPublicSignInRoute = publicPublicSignInImport.update({
   id: '/sign-in',
   path: '/sign-in',
   getParentRoute: () => publicPublicRoute,
+} as any)
+
+const authAuthProductsRoute = authAuthProductsImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => authAuthRoute,
 } as any)
 
 const authAuthHomeRoute = authAuthHomeImport.update({
@@ -131,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authAuthHomeImport
       parentRoute: typeof authAuthImport
     }
+    '/(auth)/_auth/products': {
+      id: '/(auth)/_auth/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof authAuthProductsImport
+      parentRoute: typeof authAuthImport
+    }
     '/(public)/_public/sign-in': {
       id: '/(public)/_public/sign-in'
       path: '/sign-in'
@@ -152,10 +166,12 @@ declare module '@tanstack/react-router' {
 
 interface authAuthRouteChildren {
   authAuthHomeRoute: typeof authAuthHomeRoute
+  authAuthProductsRoute: typeof authAuthProductsRoute
 }
 
 const authAuthRouteChildren: authAuthRouteChildren = {
   authAuthHomeRoute: authAuthHomeRoute,
+  authAuthProductsRoute: authAuthProductsRoute,
 }
 
 const authAuthRouteWithChildren = authAuthRoute._addFileChildren(
@@ -201,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/': typeof publicPublicRouteWithChildren
   '/sign-out': typeof SignOutRoute
   '/home': typeof authAuthHomeRoute
+  '/products': typeof authAuthProductsRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
 }
@@ -209,6 +226,7 @@ export interface FileRoutesByTo {
   '/': typeof publicPublicRouteWithChildren
   '/sign-out': typeof SignOutRoute
   '/home': typeof authAuthHomeRoute
+  '/products': typeof authAuthProductsRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
 }
@@ -222,15 +240,16 @@ export interface FileRoutesById {
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_public': typeof publicPublicRouteWithChildren
   '/(auth)/_auth/home': typeof authAuthHomeRoute
+  '/(auth)/_auth/products': typeof authAuthProductsRoute
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
   '/(public)/_public/sign-up': typeof publicPublicSignUpRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-out' | '/home' | '/sign-in' | '/sign-up'
+  fullPaths: '/' | '/sign-out' | '/home' | '/products' | '/sign-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-out' | '/home' | '/sign-in' | '/sign-up'
+  to: '/' | '/sign-out' | '/home' | '/products' | '/sign-in' | '/sign-up'
   id:
     | '__root__'
     | '/'
@@ -240,6 +259,7 @@ export interface FileRouteTypes {
     | '/(public)'
     | '/(public)/_public'
     | '/(auth)/_auth/home'
+    | '/(auth)/_auth/products'
     | '/(public)/_public/sign-in'
     | '/(public)/_public/sign-up'
   fileRoutesById: FileRoutesById
@@ -291,7 +311,8 @@ export const routeTree = rootRoute
       "filePath": "(auth)/_auth.tsx",
       "parent": "/(auth)",
       "children": [
-        "/(auth)/_auth/home"
+        "/(auth)/_auth/home",
+        "/(auth)/_auth/products"
       ]
     },
     "/(public)": {
@@ -310,6 +331,10 @@ export const routeTree = rootRoute
     },
     "/(auth)/_auth/home": {
       "filePath": "(auth)/_auth.home.tsx",
+      "parent": "/(auth)/_auth"
+    },
+    "/(auth)/_auth/products": {
+      "filePath": "(auth)/_auth.products.tsx",
       "parent": "/(auth)/_auth"
     },
     "/(public)/_public/sign-in": {
