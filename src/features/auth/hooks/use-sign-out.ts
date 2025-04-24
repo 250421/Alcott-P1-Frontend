@@ -13,7 +13,7 @@ export const useSignOut = () => {
         },
         onSuccess: () => {
             toast.success("User logged out");
-            navigate({ to: "/sign-in"})
+            navigate({ to: "/"})
         },
         onError: (error) => {
             console.error(error);

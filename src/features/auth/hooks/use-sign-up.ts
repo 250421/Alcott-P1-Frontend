@@ -14,7 +14,7 @@ export const useSignUp = () => {
         },
         onSuccess: () => {
             toast.success("User created");
-            navigate({ to: "/sign-in"})
+            navigate({ to: "/home"})
         },
         onError: (error) => {
             console.error(error);

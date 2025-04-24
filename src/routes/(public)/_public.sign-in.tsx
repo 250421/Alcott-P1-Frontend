@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -13,7 +12,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -41,8 +39,6 @@ export const Route = createFileRoute('/(public)/_public/sign-in')({
     });
   
     function onSubmit(values: SignInSchemaType) {
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
       console.log(login(values));
     }
   

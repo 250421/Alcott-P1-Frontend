@@ -2,11 +2,11 @@ import { useAuth } from '@/features/auth/hooks/use-auth';
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router'
 import { Loader } from 'lucide-react';
 
-export const Route = createFileRoute('/(public)/_public')({
-  component: PublicLayout,
+export const Route = createFileRoute('/(auth)/_auth')({
+  component: AuthLayout,
 })
 
-function PublicLayout() {
+function AuthLayout() {
   const { data: user, isLoading } = useAuth();
 
   if (isLoading) return (
@@ -15,8 +15,8 @@ function PublicLayout() {
     </div>
   )
 
-  if (user) {
-    return <Navigate to={"/home"}/>;
+  if (!user) {
+    return <Navigate to={"/"}/>;
   }
   return (
     <div className="flex items-center h-screen justify-center">

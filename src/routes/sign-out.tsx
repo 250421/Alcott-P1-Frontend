@@ -1,5 +1,5 @@
 import { useSignOut } from '@/features/auth/hooks/use-sign-out';
-import { createFileRoute, Navigate } from '@tanstack/react-router'
+import { createFileRoute} from '@tanstack/react-router'
 import { Loader } from 'lucide-react';
 import { useEffect } from 'react';
 
