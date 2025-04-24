@@ -20,10 +20,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signupSchema, SignupSchemaType } from '@/features/auth/schemas/sign-up-schema';
-import { useSignUp } from '@/features/auth/hooks/use-sign-up'
 import { signinSchema, SignInSchemaType } from '@/features/auth/schemas/sign-in-schema'
 import { useSignIn } from '@/features/auth/hooks/use-sign-in'
+import { Loader } from 'lucide-react'
 
 export const Route = createFileRoute('/(public)/_public/sign-in')({
     component: SignInPage,
@@ -31,7 +30,7 @@ export const Route = createFileRoute('/(public)/_public/sign-in')({
   
   function SignInPage() {
     
-    const {mutate: login } = useSignIn();
+    const {mutate: login, isPending } = useSignIn();
   
     const form = useForm<SignInSchemaType>({
       resolver: zodResolver(signinSchema),
@@ -84,7 +83,10 @@ export const Route = createFileRoute('/(public)/_public/sign-in')({
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={isPending}>
+              {isPending ? (<Loader className="size-4 animate-spin" />)
+              : ("Submit")}
+            </Button>
             </form>
           </Form>
   

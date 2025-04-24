@@ -22,13 +22,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { signupSchema, SignupSchemaType } from '@/features/auth/schemas/sign-up-schema';
 import { useSignUp } from '@/features/auth/hooks/use-sign-up'
+import { Loader } from 'lucide-react'
 
 export const Route = createFileRoute('/(public)/_public/sign-up')({
   component: SignUpPage,
 })
 
 function SignUpPage() {
-  const { mutate: createUser } = useSignUp();
+  const { mutate: createUser, isPending } = useSignUp();
 
 
   const form = useForm<SignupSchemaType>({
@@ -82,7 +83,10 @@ function SignUpPage() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? (<Loader className="size-4 animate-spin" />)
+              : ("Submit")}
+            </Button>
           </form>
         </Form>
 

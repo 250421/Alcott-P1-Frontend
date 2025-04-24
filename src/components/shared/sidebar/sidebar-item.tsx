@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { Link } from '@tanstack/react-router';
 import { LucideIcon } from 'lucide-react';
-import React from 'react'
 
 interface SidebarItemProps {
     label: string;
@@ -16,7 +16,9 @@ export const SidebarItem = ({
   return (
     <Button className="w-full flex justify-start" variant="ghost">
         <Icon className="size-4 mr-2" />
-        {label}
+        <Link to={href}>
+          {label}
+        </Link>
     </Button>
   )
 }

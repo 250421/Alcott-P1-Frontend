@@ -13,6 +13,7 @@ export const Route = createRootRoute({
 });
 
 const RootLayout = () => {
+
     // Create a client
     const queryClient = new QueryClient();
 
