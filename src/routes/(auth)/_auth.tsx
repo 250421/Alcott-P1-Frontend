@@ -1,13 +1,14 @@
+import { Navbar } from '@/components/shared/navbar';
+import { AppSidebar } from '@/components/shared/sidebar/app-sidebar';
 import { Sidebar } from '@/components/shared/sidebar/sidebar';
 import { SidebarContainer } from '@/components/shared/sidebar/sidebar-container';
 import { SidebarContent } from '@/components/shared/sidebar/sidebar-content';
 import { SidebarGroup } from '@/components/shared/sidebar/sidebar-group';
 import { SidebarItem } from '@/components/shared/sidebar/sidebar-item';
 import { SidebarMainWrapper } from '@/components/shared/sidebar/sidebar-main-wrapper';
-import { SidebarProvider } from '@/components/ui/sidebar';
 import { useAuth } from '@/features/auth/hooks/use-auth';
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router'
-import { DoorOpen, HomeIcon, List, Loader, Settings } from 'lucide-react';
+import { Apple, DoorOpen, HomeIcon, List, Loader, Scroll, SidebarIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/(auth)/_auth')({
   component: AuthLayout,
@@ -29,23 +30,18 @@ function AuthLayout() {
     <div>
 
         <SidebarContainer>
-          <Sidebar>
-            <SidebarContent>
-              <SidebarGroup>
-                <SidebarItem label={"Home"} icon={HomeIcon} href={"/home"} />
-                <SidebarItem label={"Products"} icon={List} href={"/products"} />
-                <SidebarItem label={"Settings"} icon={Settings} href={"/settings"} />
-                <SidebarItem label={"Log out"} icon={DoorOpen} href={"/sign-out"} />
-              </SidebarGroup>
-            </SidebarContent>
-          </Sidebar>
+          <AppSidebar/>
 
           <SidebarMainWrapper>
-            <h1></h1>
+            <Navbar/>
+
+            <main className="max-w-screen mx-auto w-11/12">
+              <Outlet/>
+            </main>
           </SidebarMainWrapper>
         </SidebarContainer>
 
-        <Outlet/>
+        
 
     </div>
     

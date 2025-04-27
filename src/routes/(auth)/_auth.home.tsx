@@ -11,7 +11,7 @@ export const Route = createFileRoute('/(auth)/_auth/home')({
 
 function HomePage() {
   return ( // HTML part goes here
-      <div className="flex items-center h-screen justify-center">Home screen!</div>
+      <div>Home screen!</div>
   )
 }
 

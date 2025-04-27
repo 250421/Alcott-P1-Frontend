@@ -1,17 +1,21 @@
 import { axiosInstance } from "@/lib/axios-config";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 export const useSignOut = () => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async () => {
-            const response = await axiosInstance.post("/auth/sign-out", {});
+            const response = await axiosInstance.post("/auth/sign-out");
             return response.data;
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["auth"]
+            });
             toast.success("User logged out");
             navigate({ to: "/"})
         },

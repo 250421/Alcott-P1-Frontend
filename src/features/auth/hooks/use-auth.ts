@@ -10,7 +10,7 @@ export const useAuth = () => {
             role: "USER" | "ADMIN";
         } | null > => {
             try {
-                const response = await axiosInstance.get("/auth");
+                const response = await axiosInstance.get("/auth/checkAuthentication");
                 return response.data;
             } catch (error) {
                 //console.error(error);

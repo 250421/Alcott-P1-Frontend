@@ -21,6 +21,7 @@ import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sig
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
 import { Route as authAuthProductsImport } from './routes/(auth)/_auth.products'
 import { Route as authAuthHomeImport } from './routes/(auth)/_auth.home'
+import { Route as authAuthCategoriesImport } from './routes/(auth)/_auth.categories'
 
 // Create Virtual Routes
 
@@ -85,6 +86,12 @@ const authAuthHomeRoute = authAuthHomeImport.update({
   getParentRoute: () => authAuthRoute,
 } as any)
 
+const authAuthCategoriesRoute = authAuthCategoriesImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => authAuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -131,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicPublicImport
       parentRoute: typeof publicRoute
     }
+    '/(auth)/_auth/categories': {
+      id: '/(auth)/_auth/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof authAuthCategoriesImport
+      parentRoute: typeof authAuthImport
+    }
     '/(auth)/_auth/home': {
       id: '/(auth)/_auth/home'
       path: '/home'
@@ -165,11 +179,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface authAuthRouteChildren {
+  authAuthCategoriesRoute: typeof authAuthCategoriesRoute
   authAuthHomeRoute: typeof authAuthHomeRoute
   authAuthProductsRoute: typeof authAuthProductsRoute
 }
 
 const authAuthRouteChildren: authAuthRouteChildren = {
+  authAuthCategoriesRoute: authAuthCategoriesRoute,
   authAuthHomeRoute: authAuthHomeRoute,
   authAuthProductsRoute: authAuthProductsRoute,
 }
@@ -216,6 +232,7 @@ const publicRouteWithChildren =
 export interface FileRoutesByFullPath {
   '/': typeof publicPublicRouteWithChildren
   '/sign-out': typeof SignOutRoute
+  '/categories': typeof authAuthCategoriesRoute
   '/home': typeof authAuthHomeRoute
   '/products': typeof authAuthProductsRoute
   '/sign-in': typeof publicPublicSignInRoute
@@ -225,6 +242,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof publicPublicRouteWithChildren
   '/sign-out': typeof SignOutRoute
+  '/categories': typeof authAuthCategoriesRoute
   '/home': typeof authAuthHomeRoute
   '/products': typeof authAuthProductsRoute
   '/sign-in': typeof publicPublicSignInRoute
@@ -239,6 +257,7 @@ export interface FileRoutesById {
   '/(auth)/_auth': typeof authAuthRouteWithChildren
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_public': typeof publicPublicRouteWithChildren
+  '/(auth)/_auth/categories': typeof authAuthCategoriesRoute
   '/(auth)/_auth/home': typeof authAuthHomeRoute
   '/(auth)/_auth/products': typeof authAuthProductsRoute
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
@@ -247,9 +266,23 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-out' | '/home' | '/products' | '/sign-in' | '/sign-up'
+  fullPaths:
+    | '/'
+    | '/sign-out'
+    | '/categories'
+    | '/home'
+    | '/products'
+    | '/sign-in'
+    | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-out' | '/home' | '/products' | '/sign-in' | '/sign-up'
+  to:
+    | '/'
+    | '/sign-out'
+    | '/categories'
+    | '/home'
+    | '/products'
+    | '/sign-in'
+    | '/sign-up'
   id:
     | '__root__'
     | '/'
@@ -258,6 +291,7 @@ export interface FileRouteTypes {
     | '/(auth)/_auth'
     | '/(public)'
     | '/(public)/_public'
+    | '/(auth)/_auth/categories'
     | '/(auth)/_auth/home'
     | '/(auth)/_auth/products'
     | '/(public)/_public/sign-in'
@@ -311,6 +345,7 @@ export const routeTree = rootRoute
       "filePath": "(auth)/_auth.tsx",
       "parent": "/(auth)",
       "children": [
+        "/(auth)/_auth/categories",
         "/(auth)/_auth/home",
         "/(auth)/_auth/products"
       ]
@@ -328,6 +363,10 @@ export const routeTree = rootRoute
         "/(public)/_public/sign-in",
         "/(public)/_public/sign-up"
       ]
+    },
+    "/(auth)/_auth/categories": {
+      "filePath": "(auth)/_auth.categories.tsx",
+      "parent": "/(auth)/_auth"
     },
     "/(auth)/_auth/home": {
       "filePath": "(auth)/_auth.home.tsx",
