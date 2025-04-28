@@ -16,7 +16,7 @@ function PublicLayout() {
   )
 
   if (user) {
-    return <Navigate to={"/home"}/>;
+    return <Navigate to={"/"}/>;
   }
   return (
     <div className="flex items-center h-screen justify-center">

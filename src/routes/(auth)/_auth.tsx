@@ -1,14 +1,10 @@
 import { Navbar } from '@/components/shared/navbar';
 import { AppSidebar } from '@/components/shared/sidebar/app-sidebar';
-import { Sidebar } from '@/components/shared/sidebar/sidebar';
 import { SidebarContainer } from '@/components/shared/sidebar/sidebar-container';
-import { SidebarContent } from '@/components/shared/sidebar/sidebar-content';
-import { SidebarGroup } from '@/components/shared/sidebar/sidebar-group';
-import { SidebarItem } from '@/components/shared/sidebar/sidebar-item';
 import { SidebarMainWrapper } from '@/components/shared/sidebar/sidebar-main-wrapper';
 import { useAuth } from '@/features/auth/hooks/use-auth';
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router'
-import { Apple, DoorOpen, HomeIcon, List, Loader, Scroll, SidebarIcon } from 'lucide-react';
+import { Loader } from 'lucide-react';
 
 export const Route = createFileRoute('/(auth)/_auth')({
   component: AuthLayout,
@@ -24,7 +20,7 @@ function AuthLayout() {
   )
 
   if (!user) {
-    return <Navigate to={"/"}/>;
+    return <Navigate to={"/sign-in"}/>;
   }
   return (
     <div>
@@ -35,7 +31,7 @@ function AuthLayout() {
           <SidebarMainWrapper>
             <Navbar/>
 
-            <main className="max-w-screen mx-auto w-11/12">
+            <main className="max-w-screen mx-auto w-11/12 my-10">
               <Outlet/>
             </main>
           </SidebarMainWrapper>

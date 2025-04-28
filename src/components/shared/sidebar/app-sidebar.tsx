@@ -11,7 +11,7 @@ export const AppSidebar = () => {
             <Sidebar>
                 <SidebarContent>
                     <SidebarGroup>
-                        <SidebarItem label={"Home"} icon={HomeIcon} href={"/home"} />
+                        <SidebarItem label={"Home"} icon={HomeIcon} href={"/"} />
                         <SidebarItem label={"Products"} icon={Scroll} href={"/products"} />
                         <SidebarItem label={"Categories"} icon={List} href={"/categories"} />
                     </SidebarGroup>

@@ -14,7 +14,7 @@ export const useSignIn = () => {
         },
         onSuccess: () => {
             toast.success("User logged in");
-            navigate({ to: "/home"})
+            navigate({ to: "/"})
         },
         onError: (error) => {
             console.error(error);

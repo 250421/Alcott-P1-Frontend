@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button"
 import React from "react"
 import { Input } from "@/components/ui/input"
+import { Link, useNavigate } from "@tanstack/react-router"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
