@@ -1,8 +1,8 @@
 import { axiosInstance } from "@/lib/axios-config";
-import { useMutation, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
+import { Product } from "@/models/product";
+import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { Product } from "../components/product-listing/columns";
 
 
 

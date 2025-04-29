@@ -8,6 +8,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
+import { Product } from "@/models/product";
 
 interface ConfirmDialogProps {
     title: string;

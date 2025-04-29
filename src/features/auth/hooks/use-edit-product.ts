@@ -2,19 +2,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios-config";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { Product } from "@/models/product";
+import { EditProductSchemaType } from "../schemas/edit-product-schema";
 
-export const useDeleteProducts = () => {
+export const useEditProduct = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (values: Product[]) => {
-            const response = await axiosInstance.post("/auth/admin/delete-magics", values);
+        mutationFn: async (values: EditProductSchemaType) => {
+            const response = await axiosInstance.post("/auth/admin/add-magic", values);
             return response.data;
         },
         onSuccess: () => {
-            toast.success("Selected items deleted successfully");
+            toast.success("Product edits saved successfully");
             queryClient.invalidateQueries({
-                queryKey: ["products"]
+                queryKey: ["product"]
             });
         },
         onError: (error) => {

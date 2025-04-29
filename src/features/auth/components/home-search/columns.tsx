@@ -1,19 +1,10 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Product } from "@/models/product"
 import { Link } from "@tanstack/react-router"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
 
-export type Product = {
-    id: number,
-    name: string,
-    description: string,
-    stock: number,
-    price: number,
-    category: string,
-    imageUrl: string
-}
+
 
 export const columns: ColumnDef<Product>[] = [
     {

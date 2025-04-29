@@ -6,16 +6,8 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useAuth } from "../../hooks/use-auth"
+import { Product } from "@/models/product"
 
-export type Product = {
-    id: number,
-    name: string,
-    description: string,
-    stock: number,
-    price: number,
-    category: string,
-    imageUrl: string
-}
 
 export const columns: ColumnDef<Product>[] = [
     {

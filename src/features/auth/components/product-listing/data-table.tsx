@@ -38,7 +38,7 @@ import { Link, useNavigate } from "@tanstack/react-router"
 import { useAuth } from "../../hooks/use-auth"
 import { useConfirm } from "@/hooks/use-confirm"
 import { useDeleteProducts } from "../../hooks/use-delete-products"
-import { Product } from "./columns"
+import { Product } from "@/models/product"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -126,19 +126,21 @@ export function DataTable<TData extends Product, TValue>({
 
 
                 </div>
-                {user?.role === "ADMIN" // Delete selected button only for admin
-                    && (table.getIsAllPageRowsSelected() ||
-                        (table.getIsSomePageRowsSelected() && "indeterminate"))
-                    && <Button variant="destructive" onClick={handleDelete}>Delete Selected</Button>
-                }
-                {user?.role === "ADMIN" // Confirm dialog for selected deletion
-                    &&
-                    <DeleteDialog
-                        title={"Delete selected items from product listing"}
-                        description={"This will delete all selected items from the product listing forever. Are you sure?"}
-                        destructive={true}
-                    />
-                }
+                <div className="mx-5">
+                    {user?.role === "ADMIN" // Delete selected button only for admin
+                        && (table.getIsAllPageRowsSelected() ||
+                            (table.getIsSomePageRowsSelected() && "indeterminate"))
+                        && <Button variant="destructive" onClick={handleDelete}>Delete Selected</Button>
+                    }
+                    {user?.role === "ADMIN" // Confirm dialog for selected deletion
+                        &&
+                        <DeleteDialog
+                            title={"Delete selected items from product listing"}
+                            description={"This will delete all selected items from the product listing forever. Are you sure?"}
+                            destructive={true}
+                        />
+                    }
+                </div>
             </div>
             <div className="rounded-md border">
                 <Table>

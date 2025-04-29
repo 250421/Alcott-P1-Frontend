@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { Product } from "../components/product-listing/columns"
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { axiosInstance } from "@/lib/axios-config";
+import { Product } from "@/models/product";
 
 interface UseGetProductByIdProps {
     id: string;

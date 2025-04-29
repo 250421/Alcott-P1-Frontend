@@ -2,14 +2,11 @@
 
 import {
     ColumnDef,
-    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
-    Row,
-    SortingFn,
     SortingState,
     useReactTable,
 } from "@tanstack/react-table"
@@ -34,7 +31,7 @@ import {
 import { Button } from "@/components/ui/button"
 import React from "react"
 import { Input } from "@/components/ui/input"
-import { Product } from "./columns"
+import { Product } from "@/models/product"
 
 interface DataTableProps<Tdata, TValue> {
     columns: ColumnDef<Tdata, TValue>[]
@@ -45,7 +42,7 @@ export function DataTable<TData extends Product, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [sorting] = React.useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = React.useState<string>(""); // the global filter state
 
     const table = useReactTable({
