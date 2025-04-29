@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Link } from "@tanstack/react-router"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
-import { useAuth } from "../../hooks/use-auth"
 
 export type Product = {
     id: number,
@@ -20,6 +18,7 @@ export type Product = {
 export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: "name",
+        enableMultiSort: true,
         header: "Name",
         cell: ({ row }) => {
             const text = "" + row.getValue("name");
@@ -34,6 +33,15 @@ export const columns: ColumnDef<Product>[] = [
                     </Link>
                 </div>
             )
+        }
+    },
+    {
+        accessorKey: "description",
+        enableMultiSort: true,
+        header: () => <div className="text-left mx-3">Description</div>,
+        cell: ({ row }) => {
+            const text = "" + row.getValue("description");
+            return <div className="mx-3 text-left font-medium"> {text} </div>
         }
     },
     {
@@ -55,53 +63,10 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "category",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Category
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        header: () => <div className="text-left mx-3">Category</div>,
         cell: ({ row }) => {
             const text = "" + row.getValue("category");
             return <div className="mx-3 text-left font-medium"> {text} </div>
-        },
+        }
     },
-    {
-        id: "select",
-        header: ({ table }) => {
-            const { data: user } = useAuth();
-            return (user?.role === "ADMIN" ?
-                <Checkbox
-                    checked={
-                        table.getIsAllPageRowsSelected() ||
-                        (table.getIsSomePageRowsSelected() && "indeterminate")
-                    }
-                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                    aria-label="Select all"
-                />
-                : <div></div>
-
-            )
-
-
-        },
-        cell: ({ row }) => {
-            const { data: user } = useAuth();
-            return (user?.role === "ADMIN" ?
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-                : <div></div>
-            )
-        },
-        enableSorting: false,
-        enableHiding: false,
-    }
 ]

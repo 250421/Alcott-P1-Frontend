@@ -1,3 +1,4 @@
+import AppSearchTable from '@/features/auth/components/home-search/page'
 import { createFileRoute } from '@tanstack/react-router'
 
 
@@ -10,7 +11,7 @@ function Index() {
 
     return ( // HTML part goes here
         <div>
-            Home screen!
+            <AppSearchTable />
         </div>
     )
         
