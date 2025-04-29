@@ -8,7 +8,7 @@ export const useEditProduct = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (values: EditProductSchemaType) => {
-            const response = await axiosInstance.post("/auth/admin/add-magic", values);
+            const response = await axiosInstance.post("/auth/admin/update-magic", values);
             return response.data;
         },
         onSuccess: () => {

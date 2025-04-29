@@ -13,12 +13,15 @@ import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { useEditProduct } from '@/features/auth/hooks/use-edit-product';
 import { useEdit } from '@/hooks/use-edit';
+import { useAuth } from '@/features/auth/hooks/use-auth';
 
 export const Route = createFileRoute('/(auth)/_auth/product/$magicId')({
   component: MagicIdPage,
 })
 
 function MagicIdPage() {
+  const { data: user } = useAuth();
+
   const { magicId } = useParams({
     from: "/(auth)/_auth/product/$magicId"
   });
@@ -26,7 +29,7 @@ function MagicIdPage() {
     id: magicId
   });
 
-  const [editProductConfirm, EditProductDialog] = useEdit(magic?.id ?? -1);
+  const [editProductConfirm, EditProductDialog] = useEdit(magic ? magic : null);
 
   const { mutate: editProduct } = useEditProduct();
 
@@ -49,7 +52,7 @@ function MagicIdPage() {
         <CardHeader>
           <div className="relative flex items-center justify-center w-full">
             <CardTitle className="font-bold text-5xl">{magic?.name}</CardTitle>
-            <Button className="absolute right-5" size="lg" onClick={handleEdit}>Edit</Button>
+            {user?.role === "ADMIN" && <Button className="absolute right-5" size="lg" onClick={handleEdit}>Edit</Button>}
           </div>
           <Separator className="my-5 bg-blue-500" />
           <img
