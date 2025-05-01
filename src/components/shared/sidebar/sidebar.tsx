@@ -11,7 +11,7 @@ export const Sidebar = ({ children }: SidebarProps) => {
   return (
     <div className={cn(
         "fixed top-0 left-0 border-r h-screen transition-all duration-300 ease-in-out overflow-hidden",
-        isOpen ? "w-64 bg-blue-300" : "w-0 bg-transparent")}>
+        isOpen ? "w-64 bg-purple-400" : "w-0 bg-transparent")}>
           {children}
     </div>
   )

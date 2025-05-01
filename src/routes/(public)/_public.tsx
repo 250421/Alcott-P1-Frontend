@@ -11,12 +11,12 @@ function PublicLayout() {
 
   if (isLoading) return (
     <div className="flex items-center h-screen justify-center">
-      <Loader className="size-16 animate-spin"/>
+      <Loader className="size-16 animate-spin" />
     </div>
   )
 
   if (user) {
-    return <Navigate to={"/"}/>;
+    return <Navigate to={"/"} />;
   }
   return (
     <div className="flex items-center h-screen justify-center">

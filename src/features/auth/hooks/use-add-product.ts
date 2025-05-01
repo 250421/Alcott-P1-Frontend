@@ -1,30 +1,28 @@
-import { axiosInstance } from "@/lib/axios-config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { AxiosError } from "axios";
+import { axiosInstance } from "@/lib/axios-config";
 import { toast } from "sonner";
+import { AxiosError } from "axios";
+import { EditProductSchemaType } from "../schemas/edit-product-schema";
+import { Product } from "@/models/product";
 
-export const useSignOut = () => {
-    const navigate = useNavigate();
+export const useAddProduct = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async () => {
-            const response = await axiosInstance.post("/auth/sign-out");
+        mutationFn: async (values: Product) => {
+            const response = await axiosInstance.post("/auth/admin/add-magic", values);
             return response.data;
         },
         onSuccess: () => {
+            toast.success("Product added successfully");
             queryClient.invalidateQueries({
-                queryKey: ["auth"]
+                queryKey: ["products"]
             });
-            toast.success("User logged out");
-            navigate({ to: "/sign-in"})
         },
         onError: (error) => {
             console.error(error);
             if(error instanceof AxiosError) {
                 toast.error(error.response?.data.message);
             }
-            //navigate({ to: "/sign-in"})
         }
     })
 }

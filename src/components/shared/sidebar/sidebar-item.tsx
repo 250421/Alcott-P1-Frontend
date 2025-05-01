@@ -15,8 +15,8 @@ export const SidebarItem = ({
 }: SidebarItemProps) => {
   return (
     <Button className="w-full flex justify-start" variant="ghost">
-        <Icon className="size-4 mr-2" />
-        <Link to={href}>
+        <Icon className="size-4 mr-2 text-yellow-300" />
+        <Link to={href} className="text-yellow-200">
           {label}
         </Link>
     </Button>

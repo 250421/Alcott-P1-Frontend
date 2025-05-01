@@ -48,24 +48,25 @@ function MagicIdPage() {
 
   return (
     <div>
-      <Card className="h-200 text-center bg-blue-100">
+      <Card className="h-200 text-center bg-purple-300">
         <CardHeader>
           <div className="relative flex items-center justify-center w-full">
             <CardTitle className="font-bold text-5xl">{magic?.name}</CardTitle>
-            {user?.role === "ADMIN" && <Button className="absolute right-5" size="lg" onClick={handleEdit}>Edit</Button>}
+            {user?.role === "ADMIN" && <Button className="absolute right-5 bg-gray-400" size="lg" onClick={handleEdit}>Edit</Button>}
           </div>
-          <Separator className="my-5 bg-blue-500" />
+          <Separator className="my-5 bg-yellow-500" />
           <img
             src={magic?.imageUrl || "https://placehold.co/600x400?text=No+Image+Available"}
             className="w-full h-100 object-contain rounded-lg scale-50"
           />
           <CardDescription className="my-10 text-xl italic">{magic?.description}</CardDescription>
-          <Separator className="my-2 bg-blue-500" />
+          <Separator className="my-2 bg-yellow-500" />
         </CardHeader>
 
         <CardContent className="flex justify-center items-center gap-x-50 text-2xl">
           <p>Price: ${magic?.price.toPrecision(3)}</p>
           <p>In Stock: {magic?.stock}</p>
+          <p>Category: {magic?.category}</p>
         </CardContent>
       </Card>
 

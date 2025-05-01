@@ -11,12 +11,12 @@ import { Product } from "@/models/product";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { editProductSchema, EditProductSchemaType } from "@/features/auth/schemas/edit-product-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectPortal } from "@radix-ui/react-select";
 import { DialogPortal } from "@radix-ui/react-dialog";
+import { addProductSchema, AddProductSchemaType } from "@/features/auth/schemas/add-product-schema";
 
-interface EditDialogProps {
+interface AddDialogProps {
     title: string;
     description: string;
     confirmLabel?: string;
@@ -24,24 +24,24 @@ interface EditDialogProps {
     destructive?: boolean;
 }
 
-function onSubmit(values: EditProductSchemaType) {
+function onSubmit(values: AddProductSchemaType) {
     console.log((values));
 }
 
-export const useEdit = (currentProduct: Product | null): [
+export const useAdd = (): [
     () => Promise<Product | null>,
-    (props: EditDialogProps) => JSX.Element
+    (props: AddDialogProps) => JSX.Element
 ] => {
     const [state, setState] = useState<{
         resolve: (value: Product | null) => void
     } | null>(null);
 
-    const confirm = () => new Promise<Product | null>((resolve) => setState({ resolve}));
+    const confirm = () => new Promise<Product | null>((resolve) => setState({ resolve }));
 
     const handleConfirm = () => {
         state?.resolve({
-            id: currentProduct?.id || -1,
-            name: form.getValues("name") == "" ? currentProduct?.name : form.getValues("name"),
+            id: -2,
+            name: form.getValues("name"),
             description: form.getValues("description") == "" ? "No description provided" : form.getValues("description"),
             imageUrl: form.getValues("imageUrl"),
             price: form.getValues("price") <= 0 ? 999 : form.getValues("price"),
@@ -58,39 +58,24 @@ export const useEdit = (currentProduct: Product | null): [
         setState(null);
     }
 
-    const form = useForm<EditProductSchemaType>({
-        resolver: zodResolver(editProductSchema),
+    const form = useForm<AddProductSchemaType>({
+        resolver: zodResolver(addProductSchema),
         defaultValues: {
-            id: currentProduct?.id || -1,
-            name: currentProduct?.name || "",
-            description: currentProduct?.description || "",
-            imageUrl: currentProduct?.imageUrl || "",
-            price: currentProduct?.price || 0,
-            stock: currentProduct?.stock || 999,
-            category: currentProduct?.category || "All",
+            name: "Name",
+            description: "No description provided",
+            imageUrl: "",
+            price: 0,
+            stock: 999,
+            category: "All",
         },
     });
-
-    useEffect(() => {
-        if (currentProduct) {
-            form.reset({
-                id: currentProduct.id,
-                name: currentProduct.name,
-                description: currentProduct.description,
-                imageUrl: currentProduct.imageUrl,
-                price: currentProduct.price,
-                stock: currentProduct.stock,
-                category: currentProduct.category,
-            });
-        }
-    }, [currentProduct, form]);
 
     const ConfirmDialog = ({
         title,
         description,
         confirmLabel = "Confirm",
         cancelLabel = "Cancel",
-    }: EditDialogProps) => (
+    }: AddDialogProps) => (
         <Dialog open={!!state} onOpenChange={handleCancel}>
             <DialogContent>
                 <DialogHeader>
