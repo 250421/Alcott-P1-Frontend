@@ -64,7 +64,7 @@ function MagicIdPage() {
         </CardHeader>
 
         <CardContent className="flex justify-center items-center gap-x-50 text-2xl">
-          <p>Price: ${magic?.price.toPrecision(3)}</p>
+          <p>Price: ${magic?.price.toFixed(2)}</p>
           <p>In Stock: {magic?.stock}</p>
           <p>Category: {magic?.category}</p>
         </CardContent>

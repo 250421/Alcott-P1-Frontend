@@ -12,8 +12,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectPortal } from "@radix-ui/react-select";
-import { DialogPortal } from "@radix-ui/react-dialog";
 import { addProductSchema, AddProductSchemaType } from "@/features/auth/schemas/add-product-schema";
 
 interface AddDialogProps {
@@ -24,9 +22,7 @@ interface AddDialogProps {
     destructive?: boolean;
 }
 
-function onSubmit(values: AddProductSchemaType) {
-    console.log((values));
-}
+
 
 export const useAdd = (): [
     () => Promise<Product | null>,
@@ -35,6 +31,10 @@ export const useAdd = (): [
     const [state, setState] = useState<{
         resolve: (value: Product | null) => void
     } | null>(null);
+
+    function onSubmit(values: AddProductSchemaType) {
+        handleConfirm();
+    }
 
     const confirm = () => new Promise<Product | null>((resolve) => setState({ resolve }));
 
@@ -61,11 +61,11 @@ export const useAdd = (): [
     const form = useForm<AddProductSchemaType>({
         resolver: zodResolver(addProductSchema),
         defaultValues: {
-            name: "Name",
+            name: "",
             description: "No description provided",
             imageUrl: "",
             price: 0,
-            stock: 999,
+            stock: 0,
             category: "All",
         },
     });
@@ -172,7 +172,7 @@ export const useAdd = (): [
                             <Button variant="outline" onClick={handleCancel}>
                                 {cancelLabel}
                             </Button>
-                            <Button type="submit" onClick={handleConfirm}>
+                            <Button type="submit" >
                                 {confirmLabel}
                             </Button>
                         </form>

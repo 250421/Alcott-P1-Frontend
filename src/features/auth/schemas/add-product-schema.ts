@@ -6,10 +6,10 @@ export const addProductSchema = z.object({
     }),
     description: z.string(),
     imageUrl: z.string(),
-    stock: z.number().min(0, {
+    stock: z.coerce.number().min(0, {
         message: "Stock cannot be negative",
     }),
-    price: z.number().min(0, {
+    price: z.coerce.number().min(0, {
         message: "Price cannot be negative",
     }),
     category: z.string()

@@ -48,7 +48,7 @@ function SignUpPage() {
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className="font-bold text-2xl">Sign Up</CardTitle>
+        <CardTitle className="font-bold text-2xl">Register a new account</CardTitle>
         <CardDescription>Please enter a username and password</CardDescription>
       </CardHeader>
       <CardContent>
@@ -59,7 +59,7 @@ function SignUpPage() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input placeholder="Username" {...field} />
                   </FormControl>

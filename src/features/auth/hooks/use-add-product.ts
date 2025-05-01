@@ -2,13 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios-config";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { EditProductSchemaType } from "../schemas/edit-product-schema";
-import { Product } from "@/models/product";
+import { AddProductSchemaType } from "../schemas/add-product-schema";
 
 export const useAddProduct = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (values: Product) => {
+        mutationFn: async (values: AddProductSchemaType) => {
             const response = await axiosInstance.post("/auth/admin/add-magic", values);
             return response.data;
         },

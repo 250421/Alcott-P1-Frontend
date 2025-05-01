@@ -64,6 +64,7 @@ export function DataTable<TData extends Product, TValue>({
         if (!ok) return;
 
         confirmDelete(table.getSelectedRowModel().rows.map((row) => row.original)); // get the selected rows and pass them to the delete function
+        setRowSelection({}); // reset the selected rows after deletion
     }
 
 
