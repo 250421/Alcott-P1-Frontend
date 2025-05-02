@@ -32,6 +32,9 @@ import { Button } from "@/components/ui/button"
 import React from "react"
 import { Input } from "@/components/ui/input"
 import { Product } from "@/models/product"
+import { useAuth } from "../../hooks/use-auth"
+import { useConfirm } from "@/hooks/use-confirm"
+import { useDeleteProducts } from "../../hooks/use-delete-products"
 
 interface DataTableProps<Tdata, TValue> {
     columns: ColumnDef<Tdata, TValue>[]
@@ -42,19 +45,35 @@ export function DataTable<TData extends Product, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const [sorting] = React.useState<SortingState>([]);
+    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const { data: user } = useAuth(); // get the user data from the auth hook
     const [globalFilter, setGlobalFilter] = React.useState<string>(""); // the global filter state
+    const [rowSelection, setRowSelection] = React.useState({})
+    const [deleteConfirm, DeleteDialog] = useConfirm();
+
+    const { mutate: confirmDelete } = useDeleteProducts();
+
+    const handleDelete = async () => {
+        const ok = await deleteConfirm();
+        if (!ok) return;
+
+        confirmDelete(table.getSelectedRowModel().rows.map((row) => row.original)); // get the selected rows and pass them to the delete function
+        setRowSelection({}); // reset the selected rows after deletion
+    }
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
             globalFilter,
+            rowSelection,
         },
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: (row, columnId, filterValue) => {
@@ -68,40 +87,57 @@ export function DataTable<TData extends Product, TValue>({
 
     return (
         <div>
-            <div className="flex items-center py-4 gap-x-5">
-                <Input
-                    placeholder="Search by name or description..."
-                    value={globalFilter}
-                    onChange={(event) => setGlobalFilter(event.target.value)} // update global filter
-                    className="max-w-sm"
-                />
-                <Select onValueChange={(value) => table.getColumn("category")?.setFilterValue(value=="All" ? "" : value)}>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Category"/>
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem 
-                            value="All">
+            <div className="justify-between flex items-center">
+                <div className="flex items-center py-4 gap-x-5">
+                    <Input
+                        placeholder="Search by name or description..."
+                        value={globalFilter}
+                        onChange={(event) => setGlobalFilter(event.target.value)} // update global filter
+                        className="max-w-sm"
+                    />
+                    <Select onValueChange={(value) => table.getColumn("category")?.setFilterValue(value == "All" ? "" : value)}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem
+                                value="All">
                                 All
-                        </SelectItem>
-                        <SelectItem 
-                            value="Attack Magic">
+                            </SelectItem>
+                            <SelectItem
+                                value="Attack Magic">
                                 Attack Magic
-                        </SelectItem>
-                        <SelectItem 
-                            value="Defense Magic">
+                            </SelectItem>
+                            <SelectItem
+                                value="Defense Magic">
                                 Defense Magic
-                        </SelectItem>
-                        <SelectItem 
-                            value="Healing Magic">
+                            </SelectItem>
+                            <SelectItem
+                                value="Healing Magic">
                                 Healing Magic
-                        </SelectItem>
-                        <SelectItem 
-                            value="Support Magic">
+                            </SelectItem>
+                            <SelectItem
+                                value="Support Magic">
                                 Support Magic
-                        </SelectItem>
-                    </SelectContent>
-                </Select>
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="mx-5">
+                    {user?.role === "ADMIN" // Delete selected button only for admin
+                        && (table.getIsAllPageRowsSelected() ||
+                            (table.getIsSomePageRowsSelected() && "indeterminate"))
+                        && <Button variant="destructive" onClick={handleDelete}>Delete Selected</Button>
+                    }
+                    {user?.role === "ADMIN" // Confirm dialog for selected deletion
+                        &&
+                        <DeleteDialog
+                            title={"Delete selected items from product listing"}
+                            description={"This will delete all selected items from the product listing forever. Are you sure?"}
+                            destructive={true}
+                        />
+                    }
+                </div>
             </div>
             <div className="rounded-md border">
                 <Table>

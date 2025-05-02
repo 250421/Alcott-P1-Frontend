@@ -1,8 +1,10 @@
 "use client"
 
 import { Product } from "@/models/product"
+import { Checkbox } from "@radix-ui/react-checkbox"
 import { Link } from "@tanstack/react-router"
 import { ColumnDef } from "@tanstack/react-table"
+import { useAuth } from "../../hooks/use-auth"
 
 
 
@@ -60,4 +62,37 @@ export const columns: ColumnDef<Product>[] = [
             return <div className="mx-3 text-left font-medium"> {text} </div>
         }
     },
+    {
+        id: "select",
+        header: ({ table }) => {
+            const { data: user } = useAuth();
+            return (user?.role === "ADMIN" ?
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+                : <div></div>
+
+            )
+
+
+        },
+        cell: ({ row }) => {
+            const { data: user } = useAuth();
+            return (user?.role === "ADMIN" ?
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+                : <div></div>
+            )
+        },
+        enableSorting: false,
+        enableHiding: false,
+    }
 ]

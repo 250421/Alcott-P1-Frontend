@@ -15,9 +15,11 @@ export const AppSidebar = () => {
                 <SidebarContent>
                     <SidebarGroup>
                         <SidebarItem label={"Home"} icon={HomeIcon} href={"/"} />
+                        {/* 
                         <SidebarItem label={"Products"} icon={Scroll} href={"/products"} />
                         {user?.role === "ADMIN" && <SidebarSeparator className="bg-yellow-500"/>}
-                        {user?.role === "ADMIN" && <SidebarItem label={"Add product"} icon={Plus} href={"/add-product"} />}
+                        {user?.role === "ADMIN" && <SidebarItem label={"Add product"} icon={Plus} href={"/add-product"} />} 
+                        */}
                     </SidebarGroup>
                 </SidebarContent>
             </Sidebar>

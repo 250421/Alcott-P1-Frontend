@@ -53,6 +53,7 @@ export function DataTable<TData extends Product, TValue>({
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     )
+    const [globalFilter, setGlobalFilter] = React.useState<string>(""); // the global filter state
     const { data: user } = useAuth();
     const [rowSelection, setRowSelection] = React.useState({})
     const [deleteConfirm, DeleteDialog] = useConfirm();
@@ -81,7 +82,16 @@ export function DataTable<TData extends Product, TValue>({
         state: {
             sorting,
             columnFilters,
+            globalFilter,
             rowSelection,
+        },
+        onGlobalFilterChange: setGlobalFilter,
+        globalFilterFn: (row, columnId, filterValue) => {
+            // Custom global filter function to check both name and description
+            const name = row.original.name.toLowerCase();
+            const description = row.original.description.toLowerCase();
+            const searchValue = filterValue.toLowerCase();
+            return name.includes(searchValue) || description.includes(searchValue);
         },
     })
 
@@ -90,13 +100,11 @@ export function DataTable<TData extends Product, TValue>({
             <div className="justify-between flex items-center">
                 <div className="flex items-center py-4 gap-x-5">
                     <Input
-                        placeholder="Filter by name..."
-                        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("name")?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm"
-                    />
+                                            placeholder="Search by name or description..."
+                                            value={globalFilter}
+                                            onChange={(event) => setGlobalFilter(event.target.value)} // update global filter
+                                            className="max-w-sm"
+                                        />
                     <Select onValueChange={(value) => table.getColumn("category")?.setFilterValue(value == "All" ? "" : value)}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Category" />

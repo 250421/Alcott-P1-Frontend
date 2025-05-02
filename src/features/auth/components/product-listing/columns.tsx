@@ -12,7 +12,7 @@ import { Product } from "@/models/product"
 export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: "name",
-        header: "Name",
+        header: () => <div className="text-left mx-3">Name</div>,
         cell: ({ row }) => {
             const text = "" + row.getValue("name");
             return (
@@ -26,6 +26,15 @@ export const columns: ColumnDef<Product>[] = [
                     </Link>
                 </div>
             )
+        }
+    },
+    {
+        accessorKey: "description",
+        enableMultiSort: true,
+        header: () => <div className="text-left mx-3">Description</div>,
+        cell: ({ row }) => {
+            const text = "" + row.getValue("description");
+            return <div className="mx-3 text-left font-medium"> {text} </div>
         }
     },
     {
@@ -47,17 +56,7 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: "category",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Category
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        header: () => <div className="text-left mx-3">Category</div>,
         cell: ({ row }) => {
             const text = "" + row.getValue("category");
             return <div className="mx-3 text-left font-medium"> {text} </div>
