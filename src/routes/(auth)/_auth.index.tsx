@@ -33,11 +33,11 @@ function Index() {
             <h6 className="text-3xl font-bold">Search</h6>
             <SidebarSeparator className="my-10" />
             <div className="flex justify-end">
-            {user?.role === "ADMIN" &&
-                <Button size={"lg"} onClick={handleAdd}>
-                    Add new item <Plus />
-                </Button>
-            }
+                {user?.role === "ADMIN" &&
+                    <Button size={"lg"} onClick={handleAdd}>
+                        Add new item <Plus />
+                    </Button>
+                }
             </div>
             <ProductTable />
 

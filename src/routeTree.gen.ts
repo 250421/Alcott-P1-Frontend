@@ -19,7 +19,6 @@ import { Route as authAuthImport } from './routes/(auth)/_auth'
 import { Route as authAuthIndexImport } from './routes/(auth)/_auth.index'
 import { Route as publicPublicSignUpImport } from './routes/(public)/_public.sign-up'
 import { Route as publicPublicSignInImport } from './routes/(public)/_public.sign-in'
-import { Route as authAuthProductsImport } from './routes/(auth)/_auth.products'
 import { Route as authAuthAddProductImport } from './routes/(auth)/_auth.add-product'
 import { Route as authAuthProductMagicIdImport } from './routes/(auth)/_auth.product.$magicId'
 
@@ -72,12 +71,6 @@ const publicPublicSignInRoute = publicPublicSignInImport.update({
   id: '/sign-in',
   path: '/sign-in',
   getParentRoute: () => publicPublicRoute,
-} as any)
-
-const authAuthProductsRoute = authAuthProductsImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => authAuthRoute,
 } as any)
 
 const authAuthAddProductRoute = authAuthAddProductImport.update({
@@ -138,13 +131,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authAuthAddProductImport
       parentRoute: typeof authAuthImport
     }
-    '/(auth)/_auth/products': {
-      id: '/(auth)/_auth/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof authAuthProductsImport
-      parentRoute: typeof authAuthImport
-    }
     '/(public)/_public/sign-in': {
       id: '/(public)/_public/sign-in'
       path: '/sign-in'
@@ -180,14 +166,12 @@ declare module '@tanstack/react-router' {
 
 interface authAuthRouteChildren {
   authAuthAddProductRoute: typeof authAuthAddProductRoute
-  authAuthProductsRoute: typeof authAuthProductsRoute
   authAuthIndexRoute: typeof authAuthIndexRoute
   authAuthProductMagicIdRoute: typeof authAuthProductMagicIdRoute
 }
 
 const authAuthRouteChildren: authAuthRouteChildren = {
   authAuthAddProductRoute: authAuthAddProductRoute,
-  authAuthProductsRoute: authAuthProductsRoute,
   authAuthIndexRoute: authAuthIndexRoute,
   authAuthProductMagicIdRoute: authAuthProductMagicIdRoute,
 }
@@ -235,7 +219,6 @@ export interface FileRoutesByFullPath {
   '/sign-out': typeof SignOutRoute
   '/': typeof authAuthIndexRoute
   '/add-product': typeof authAuthAddProductRoute
-  '/products': typeof authAuthProductsRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
   '/product/$magicId': typeof authAuthProductMagicIdRoute
@@ -245,7 +228,6 @@ export interface FileRoutesByTo {
   '/sign-out': typeof SignOutRoute
   '/': typeof authAuthIndexRoute
   '/add-product': typeof authAuthAddProductRoute
-  '/products': typeof authAuthProductsRoute
   '/sign-in': typeof publicPublicSignInRoute
   '/sign-up': typeof publicPublicSignUpRoute
   '/product/$magicId': typeof authAuthProductMagicIdRoute
@@ -259,7 +241,6 @@ export interface FileRoutesById {
   '/(public)': typeof publicRouteWithChildren
   '/(public)/_public': typeof publicPublicRouteWithChildren
   '/(auth)/_auth/add-product': typeof authAuthAddProductRoute
-  '/(auth)/_auth/products': typeof authAuthProductsRoute
   '/(public)/_public/sign-in': typeof publicPublicSignInRoute
   '/(public)/_public/sign-up': typeof publicPublicSignUpRoute
   '/(auth)/_auth/': typeof authAuthIndexRoute
@@ -272,7 +253,6 @@ export interface FileRouteTypes {
     | '/sign-out'
     | '/'
     | '/add-product'
-    | '/products'
     | '/sign-in'
     | '/sign-up'
     | '/product/$magicId'
@@ -281,7 +261,6 @@ export interface FileRouteTypes {
     | '/sign-out'
     | '/'
     | '/add-product'
-    | '/products'
     | '/sign-in'
     | '/sign-up'
     | '/product/$magicId'
@@ -293,7 +272,6 @@ export interface FileRouteTypes {
     | '/(public)'
     | '/(public)/_public'
     | '/(auth)/_auth/add-product'
-    | '/(auth)/_auth/products'
     | '/(public)/_public/sign-in'
     | '/(public)/_public/sign-up'
     | '/(auth)/_auth/'
@@ -342,7 +320,6 @@ export const routeTree = rootRoute
       "parent": "/(auth)",
       "children": [
         "/(auth)/_auth/add-product",
-        "/(auth)/_auth/products",
         "/(auth)/_auth/",
         "/(auth)/_auth/product/$magicId"
       ]
@@ -363,10 +340,6 @@ export const routeTree = rootRoute
     },
     "/(auth)/_auth/add-product": {
       "filePath": "(auth)/_auth.add-product.tsx",
-      "parent": "/(auth)/_auth"
-    },
-    "/(auth)/_auth/products": {
-      "filePath": "(auth)/_auth.products.tsx",
       "parent": "/(auth)/_auth"
     },
     "/(public)/_public/sign-in": {
